@@ -1,0 +1,38 @@
+# 项目开发规范
+
+## 静态资源处理规范
+
+### 核心规则
+1. **禁止使用绝对路径引用 src 目录下的资源**
+   - ❌ 错误：`/src/assets/images/logo.png`
+   - ✅ 正确：`new URL('../assets/images/logo.png', import.meta.url).href`
+
+2. **动态资源路径必须使用 new URL() 方式**
+   ```typescript
+   const getImagePath = (imageName: string) => {
+     return new URL(`../assets/images/${imageName}.png`, import.meta.url).href;
+   };
+   ```
+
+3. **固定资源使用 ES6 import**
+   ```typescript
+   import logoImage from '../assets/images/logo.png';
+   ```
+
+4. **public 目录资源使用绝对路径**
+   ```typescript
+   const publicImagePath = '/images/logo.png'; // public/images/logo.png
+   ```
+
+### 验证要求
+- 开发环境资源正常显示
+- 执行 `npm run build` 后 dist 目录包含所有资源
+- 生产环境预览资源正常显示
+
+### 目录结构
+```
+src/assets/     # Vite 处理的资源（会被哈希重命名）
+public/         # 直接复制的资源（保持原名）
+```
+
+详细规范请参考：[静态资源处理规范](./static-assets-rules.md)
