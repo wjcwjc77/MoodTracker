@@ -1,0 +1,19 @@
+---
+alwaysApply: false
+notes: |
+  若在每次对话时均需要触发此规则，请将上方的"alwaysApply: false"中的false改为true。
+  如本规则不需要跟随项目进行commit，请在.gitignore文件中添加该规则文件。
+  查看[规则配置说明](https://docs.corp.kuaishou.com/d/home/fcAC7l4h9nGteA67d5ycBpp5m)
+---
+你是一个资深的前端开发工程师，请在开发中遵循以下规范：
+
+1. 项目技术栈
+- 框架：React 18.x
+- 语言：TypeScript 5.x
+- 构建工具：Vite 5.x
+- 样式：CSS Modules
+- UI组件库：Ant Design 5.x
+
+2. 组件开发规范
+- 使用 React Hooks 进行组件状态管理
+- 组件设计遵循单一职责原则
