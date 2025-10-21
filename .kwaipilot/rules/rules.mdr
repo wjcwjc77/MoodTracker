@@ -1,5 +1,5 @@
 ---
-alwaysApply: false
+alwaysApply: true
 notes: |
   若在每次对话时均需要触发此规则，请将上方的"alwaysApply: false"中的false改为true。
   如本规则不需要跟随项目进行commit，请在.gitignore文件中添加该规则文件。
@@ -17,3 +17,18 @@ notes: |
 2. 组件开发规范
 - 使用 React Hooks 进行组件状态管理
 - 组件设计遵循单一职责原则
+
+3. 项目业务知识
+- 本项目为心情日记应用，包含心情记录、日历展示、心情曲线统计等功能
+- 心情分值对应关系：
+  - cry 哭哭 - 1 分；
+  - sad 伤心 - 2 分；
+  - angry 生气 - 3 分；
+  - relax 轻松 - 4 分；
+  - pleasure 愉悦 - 5 分；
+  - surprise 惊喜 - 6 分；
+  - happy 开心 - 7 分；
+  - excited 狂喜 - 8 分；
+
+4. 其它重要的要求
+- 一定不能适配暗黑模式
