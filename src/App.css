@@ -49,12 +49,9 @@
   justify-content: center;
   font-size: 36px;
   line-height: 1.2;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  font-family: 'Montserrat', 'PingFang SC';
   font-weight: 700;
-  letter-spacing: -0.02em;
   color: #000000;
-  box-sizing: border-box;
-  text-align: center;
 }
 
 /* 主内容区域 */
@@ -118,7 +115,7 @@
 .divider-text {
   font-size: 14px;
   line-height: 1.5;
-  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-family: 'PingFang SC', 'Poppins', -apple-system, sans-serif;
   font-weight: 400;
   letter-spacing: 0.15em;
   color: rgba(0, 0, 0, 0.65);
@@ -144,7 +141,7 @@
   color: #86868b;
   font-weight: 400;
   letter-spacing: -0.01em;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .footer-text .heart {
@@ -159,7 +156,7 @@
   color: #6e6e73;
   font-weight: 400;
   letter-spacing: -0.01em;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 @keyframes heartbeat {
