@@ -1,26 +1,25 @@
 // 心情类型定义
-export type MoodType = '狂喜' | '开心' | '还行' | '不爽' | '超烂' | null;
+export type MoodType = 'cry' | 'sad' | 'angry' | 'relax' | 'pleasure' | 'surprise' | 'happy' | 'excited';
 
 // 心情数据接口
 export interface MoodData {
-  [key: string]: MoodType; // key格式: "YYYY-MM-DD"
+  date: string;
+  mood: MoodType;
+  score: number;
+  timestamp: number;
 }
 
-// 心情emoji映射
-export const moodEmoji: { [key in Exclude<MoodType, null>]: string } = {
-  '狂喜': '🤩',
-  '开心': '😊',
-  '还行': '😐',
-  '不爽': '😞',
-  '超烂': '😭'
+// 心情配置
+export const MOOD_CONFIG: Record<MoodType, { score: number; label: string; color: string }> = {
+  cry: { score: 1, label: '哭哭', color: '#FB8285' },
+  sad: { score: 2, label: '伤心', color: '#81F9FF' },
+  angry: { score: 3, label: '生气', color: '#FB83F7' },
+  relax: { score: 4, label: '轻松', color: '#4FB2FF' },
+  pleasure: { score: 5, label: '愉悦', color: '#48FBD2' },
+  surprise: { score: 6, label: '惊喜', color: '#5DFA60' },
+  happy: { score: 7, label: '开心', color: '#5DFA60' },
+  excited: { score: 8, label: '狂喜', color: '#5DFA60' },
 };
 
-// 心情颜色映射
-export const moodColor: { [key in Exclude<MoodType, null>]: string } = {
-  '狂喜': '#ff6b9d',
-  '开心': '#feca57',
-  '还行': '#48dbfb',
-  '不爽': '#ff9ff3',
-  '超烂': '#9c88ff'
-};
-
+// 心情选项列表
+export const MOOD_OPTIONS: MoodType[] = ['cry', 'sad', 'angry', 'relax', 'pleasure', 'surprise', 'happy', 'excited'];

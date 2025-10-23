@@ -1,0 +1,207 @@
+/* 心情选择器弹窗样式 */
+.mood-selector-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10001;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.mood-selector-modal {
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-width: 480px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.mood-selector-header {
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #E1ECEE;
+  position: relative;
+}
+
+.mood-selector-title {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #000000;
+  font-family: 'PingFang SC', sans-serif;
+}
+
+.mood-selector-date {
+  margin: 0;
+  font-size: 14px;
+  color: #89A0A4;
+  font-family: 'PingFang SC', sans-serif;
+}
+
+.mood-selector-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 20px;
+  color: #666;
+  transition: background-color 0.2s ease;
+}
+
+.mood-selector-close:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mood-selector-content {
+  padding: 24px;
+}
+
+.mood-options-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.mood-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.mood-option:hover {
+  background: rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.mood-option.selected {
+  border-color: #000000;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.mood-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mood-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mood-label {
+  font-size: 12px;
+  color: #000000;
+  font-family: 'PingFang SC', sans-serif;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* 心情操作按钮区域 */
+.mood-actions {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #E1ECEE;
+  display: flex;
+  justify-content: center;
+}
+
+.clear-mood-btn {
+  background: #FF6B6B;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'PingFang SC', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+}
+
+.clear-mood-btn:hover {
+  background: #FF5252;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.clear-mood-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .mood-selector-modal {
+    width: 95%;
+    max-width: none;
+  }
+  
+  .mood-options-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  
+  .mood-option {
+    padding: 12px 6px;
+  }
+  
+  .mood-icon {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .mood-label {
+    font-size: 11px;
+  }
+  
+  .clear-mood-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mood-options-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .mood-selector-header {
+    padding: 20px 20px 12px;
+  }
+  
+  .mood-selector-content {
+    padding: 20px;
+  }
+  
+  .mood-actions {
+    margin-top: 20px;
+    padding-top: 16px;
+  }
+}
