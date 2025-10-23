@@ -1,0 +1,113 @@
+/* Toast 组件样式 */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  z-index: 10002;
+  min-width: 300px;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  will-change: transform, opacity;
+}
+
+.toast.toast-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  gap: 12px;
+  position: relative;
+}
+
+.toast-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.toast-message {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'PingFang SC', sans-serif;
+  line-height: 1.4;
+}
+
+.toast-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.6);
+  transition: background-color 0.2s ease;
+}
+
+.toast-close:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* 不同类型的 Toast 样式 */
+.toast-warning {
+  background: rgba(255, 193, 7, 0.95);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  color: #856404;
+}
+
+.toast-error {
+  background: rgba(220, 53, 69, 0.95);
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  color: #FFFFFF;
+}
+
+.toast-info {
+  background: rgba(13, 202, 240, 0.95);
+  border: 1px solid rgba(13, 202, 240, 0.3);
+  color: #055160;
+}
+
+.toast-success {
+  background: rgba(25, 135, 84, 0.95);
+  border: 1px solid rgba(25, 135, 84, 0.3);
+  color: #FFFFFF;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .toast {
+    min-width: 280px;
+    max-width: 90vw;
+    top: 10px;
+  }
+  
+  .toast-content {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+  
+  .toast-message {
+    font-size: 13px;
+  }
+  
+  .toast-icon {
+    font-size: 18px;
+  }
+}

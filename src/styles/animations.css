@@ -1,0 +1,281 @@
+/* 解锁动画效果 */
+@keyframes unlockPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(72, 251, 210, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(72, 251, 210, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(72, 251, 210, 0);
+  }
+}
+
+@keyframes superMoodGlow {
+  0% {
+    box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+  }
+}
+
+@keyframes todoComplete {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes diarySuccess {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 应用动画效果 */
+.mood-option.unlocked-animation {
+  animation: unlockPulse 0.6s ease-out;
+}
+
+.calendar-date-cell.super-mood-day {
+  animation: superMoodGlow 2s ease-in-out infinite;
+}
+
+.todo-checkbox.completed-animation {
+  animation: todoComplete 0.4s ease-out;
+}
+
+.diary-btn.success-animation {
+  animation: diarySuccess 0.5s ease-out;
+}
+
+/* 心情选项锁定状态的视觉增强 */
+.mood-option.locked::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.mood-option.locked .mood-icon::after {
+  content: '🔒';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  z-index: 1;
+}
+
+/* 超级心情特殊效果 */
+.mood-option.super-mood:not(.locked)::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 14px;
+  z-index: -1;
+  animation: superMoodGlow 2s ease-in-out infinite;
+}
+
+/* Todo 完成状态的视觉反馈 */
+.todo-item.completed {
+  position: relative;
+  overflow: hidden;
+}
+
+.todo-item.completed::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(72, 251, 210, 0.2), transparent);
+  animation: shimmer 1s ease-out;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* 日记按钮的特殊效果 */
+.diary-btn:not(.has-diary) {
+  position: relative;
+  overflow: hidden;
+}
+
+.diary-btn:not(.has-diary)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: diaryShimmer 2s ease-in-out infinite;
+}
+
+@keyframes diaryShimmer {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* 解锁提示的动画效果 */
+.unlock-hint-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.unlock-hint-item.todo::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: var(--progress, 0%);
+  background: linear-gradient(90deg, rgba(72, 251, 210, 0.1), rgba(72, 251, 210, 0.2));
+  transition: width 0.3s ease;
+}
+
+/* 心情选择器弹窗的入场动画 */
+.mood-selector-overlay {
+  animation: fadeIn 0.3s ease;
+}
+
+.mood-selector-modal {
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 日历日期的悬停效果增强 */
+.calendar-date-cell {
+  transition: all 0.2s ease;
+}
+
+.calendar-date-cell:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-date-cell.super-mood-day:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+}
+
+/* 成功提示动画 */
+.success-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #48FBD2;
+  color: #FFFFFF;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 2000;
+  animation: successSlide 0.5s ease, successFade 3s ease;
+}
+
+@keyframes successSlide {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes successFade {
+  0%, 80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* 响应式动画调整 */
+@media (max-width: 768px) {
+  .mood-option.unlocked-animation {
+    animation-duration: 0.4s;
+  }
+  
+  .calendar-date-cell:hover {
+    transform: none;
+  }
+  
+  .calendar-date-cell.super-mood-day:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

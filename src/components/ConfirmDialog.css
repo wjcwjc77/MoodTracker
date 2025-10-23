@@ -1,0 +1,149 @@
+/* 确认对话框样式 */
+.confirm-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10003;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.confirm-dialog {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 320px;
+  max-width: 400px;
+  width: 90vw;
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.confirm-dialog-header {
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.confirm-dialog-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  font-family: 'PingFang SC', sans-serif;
+}
+
+.confirm-dialog-body {
+  padding: 16px 24px 24px;
+}
+
+.confirm-dialog-message {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666;
+  font-family: 'PingFang SC', sans-serif;
+}
+
+.confirm-dialog-footer {
+  padding: 0 24px 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.confirm-dialog-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'PingFang SC', sans-serif;
+  min-width: 80px;
+}
+
+.cancel-btn {
+  background: rgba(0, 0, 0, 0.05);
+  color: #666;
+}
+
+.cancel-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.confirm-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.confirm-btn:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 480px) {
+  .confirm-dialog {
+    min-width: 280px;
+    margin: 20px;
+  }
+  
+  .confirm-dialog-header {
+    padding: 20px 20px 12px;
+  }
+  
+  .confirm-dialog-title {
+    font-size: 16px;
+  }
+  
+  .confirm-dialog-body {
+    padding: 12px 20px 20px;
+  }
+  
+  .confirm-dialog-message {
+    font-size: 13px;
+  }
+  
+  .confirm-dialog-footer {
+    padding: 0 20px 20px;
+    flex-direction: column-reverse;
+  }
+  
+  .confirm-dialog-btn {
+    width: 100%;
+    padding: 12px;
+  }
+}

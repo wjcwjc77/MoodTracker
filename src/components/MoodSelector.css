@@ -1,28 +1,71 @@
 /* 心情选择器弹窗样式 */
 .mood-selector-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  display: flex !important;
   justify-content: center;
   align-items: center;
-  z-index: 10001;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  z-index: 10001 !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .mood-selector-modal {
   background: #FFFFFF;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
   max-width: 480px;
   width: 90%;
-  max-height: 80vh;
+  max-height: 85vh;
   overflow: hidden;
   position: relative;
+  /* 使用 GPU 加速 */
+  will-change: transform, opacity;
+  /* 调整弹窗位置，向上移动更多 */
+  transform: translateY(-8vh) translateZ(0);
+  /* 添加入场动画 */
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+.mood-selector-modal.enhanced {
+  max-width: 1200px;
+  width: 95%;
+  max-height: 90vh;
+  min-width: 800px;
+  /* 增强模式向上移动更多 */
+  transform: translateY(-6vh) translateZ(0);
+  animation: modalSlideInEnhanced 0.3s ease-out;
+}
+
+
+
+/* 弹窗入场动画 - 普通模式 */
+@keyframes modalSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) translateZ(0) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-8vh) translateZ(0) scale(1);
+  }
+}
+
+/* 弹窗入场动画 - 增强模式 */
+@keyframes modalSlideInEnhanced {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) translateZ(0) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-6vh) translateZ(0) scale(1);
+  }
 }
 
 .mood-selector-header {
@@ -70,6 +113,18 @@
 
 .mood-selector-content {
   padding: 24px;
+  display: flex;
+  gap: 24px;
+}
+
+.mood-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+.todo-panel {
+  flex: 1;
+  min-width: 0;
 }
 
 .mood-options-grid {
@@ -85,18 +140,50 @@
   padding: 16px 8px;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid transparent;
+  will-change: transform, background-color, box-shadow;
+  transform: translateZ(0);
 }
 
-.mood-option:hover {
+.mood-option:hover:not(.locked) {
   background: rgba(0, 0, 0, 0.05);
-  transform: translateY(-2px);
+  transform: translateY(-2px) translateZ(0);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .mood-option.selected {
   border-color: #000000;
   background: rgba(0, 0, 0, 0.05);
+}
+
+.mood-option.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: grayscale(100%);
+  position: relative;
+}
+
+.mood-option.locked:hover {
+  transform: none;
+  background: transparent;
+}
+
+.mood-option.super-mood:not(.locked) {
+  background: linear-gradient(135deg, #FF8C00, #FFA500);
+  border-color: #FF8C00;
+  color: #FFFFFF;
+}
+
+.mood-option.super-mood:not(.locked) .mood-label {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.mood-option.super-mood:not(.locked):hover {
+  background: linear-gradient(135deg, #FF7F00, #FF9500);
+  box-shadow: 0 8px 30px rgba(255, 140, 0, 0.4);
+  transform: translateY(-3px) translateZ(0) scale(1.02);
 }
 
 .mood-icon {
@@ -106,12 +193,45 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
 .mood-icon img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.mood-option:hover:not(.locked) .mood-icon {
+  transform: scale(1.1) translateZ(0);
+}
+
+.mood-option:hover:not(.locked) .mood-icon img {
+  transform: rotate(5deg) translateZ(0);
+}
+
+.lock-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+
+.lock-overlay svg {
+  width: 12px;
+  height: 12px;
 }
 
 .mood-label {
@@ -141,26 +261,105 @@
   font-weight: 500;
   font-family: 'PingFang SC', sans-serif;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+  will-change: transform, box-shadow, background-color;
+  transform: translateZ(0);
 }
 
 .clear-mood-btn:hover {
   background: #FF5252;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+  transform: translateY(-2px) translateZ(0);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.35);
 }
 
 .clear-mood-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+  transform: translateY(-1px) translateZ(0);
+  box-shadow: 0 3px 10px rgba(255, 107, 107, 0.25);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+
+
+
+
+.unlock-hints {
+  margin-top: 16px;
+  padding: 16px;
+  background: #F8FFFE;
+  border-radius: 8px;
+  border: 1px solid #E1ECEE;
+}
+
+.unlock-hints h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #000000;
+}
+
+.unlock-hint-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  font-size: 12px;
+}
+
+.unlock-hint-item:not(:last-child) {
+  border-bottom: 1px solid #F0F4F5;
+}
+
+.hint-icon {
+  font-size: 14px;
+}
+
+.hint-message {
+  flex: 1;
+  color: #000000;
+}
+
+.hint-progress {
+  color: #89A0A4;
+  font-weight: 500;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) translateZ(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
+}
+
+
+
 /* 响应式调整 */
+@media (max-width: 1024px) {
+  .mood-selector-modal.enhanced {
+    max-width: 95%;
+    min-width: 600px;
+  }
+}
+
 @media (max-width: 768px) {
   .mood-selector-modal {
     width: 95%;
     max-width: none;
+  }
+  
+  .mood-selector-modal.enhanced {
+    max-width: 95%;
+    min-width: auto;
+    width: 95%;
+  }
+  
+  .mood-selector-content {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
   }
   
   .mood-options-grid {
@@ -197,11 +396,19 @@
   }
   
   .mood-selector-content {
-    padding: 20px;
+    padding: 16px;
   }
   
   .mood-actions {
     margin-top: 20px;
     padding-top: 16px;
+  }
+  
+  .unlock-hints {
+    padding: 12px;
+  }
+  
+  .unlock-hint-item {
+    font-size: 11px;
   }
 }

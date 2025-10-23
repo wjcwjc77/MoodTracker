@@ -1,0 +1,248 @@
+/* Todo 项样式 */
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border: 1px solid #E1ECEE;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.todo-item:hover {
+  border-color: #C1D5DB;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item.completed {
+  background: #F8FFFE;
+  border-color: #48FBD2;
+}
+
+.todo-item.locked {
+  background: #F5F5F5;
+  border-color: #D1D5DB;
+  opacity: 0.8;
+}
+
+.todo-item.locked:hover {
+  border-color: #D1D5DB;
+  box-shadow: none;
+}
+
+.todo-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 12px;
+}
+
+.todo-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #C1D5DB;
+  border-radius: 4px;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.todo-checkbox:hover {
+  border-color: #48FBD2;
+  background: #F0FFFE;
+}
+
+.todo-checkbox.checked {
+  background: #48FBD2;
+  border-color: #48FBD2;
+  color: #FFFFFF;
+}
+
+.todo-checkbox.locked {
+  background: #9CA3AF;
+  border-color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.todo-checkbox.locked:hover {
+  background: #9CA3AF;
+  border-color: #9CA3AF;
+}
+
+.check-icon {
+  width: 12px;
+  height: 12px;
+}
+
+.lock-icon {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #6B7280;
+  border-radius: 50%;
+  padding: 1px;
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #000000;
+  cursor: pointer;
+  padding: 4px 0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  word-break: break-word;
+}
+
+.todo-text:hover {
+  background: rgba(0, 0, 0, 0.02);
+  padding: 4px 8px;
+}
+
+.todo-text.completed-text {
+  text-decoration: line-through;
+  color: #89A0A4;
+}
+
+.todo-text.locked-text {
+  color: #6B7280;
+  cursor: not-allowed;
+}
+
+.todo-text.locked-text:hover {
+  background: transparent;
+  padding: 4px 0;
+}
+
+.todo-edit-input {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #000000;
+  border: 2px solid #48FBD2;
+  border-radius: 4px;
+  padding: 4px 8px;
+  background: #FFFFFF;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.todo-edit-input:focus {
+  border-color: #2DD4BF;
+  box-shadow: 0 0 0 3px rgba(72, 251, 210, 0.1);
+}
+
+.todo-edit-input:disabled {
+  background: #F3F4F6;
+  color: #6B7280;
+  cursor: not-allowed;
+  border-color: #D1D5DB;
+}
+
+.todo-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.todo-item:hover .todo-actions {
+  opacity: 1;
+}
+
+.todo-action-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.todo-action-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.edit-btn {
+  color: #4FB2FF;
+}
+
+.edit-btn:hover {
+  background: rgba(79, 178, 255, 0.1);
+  color: #2563EB;
+}
+
+.delete-btn {
+  color: #FF6B6B;
+}
+
+.delete-btn:hover {
+  background: rgba(255, 107, 107, 0.1);
+  color: #DC2626;
+}
+
+/* 完成状态动画 */
+.todo-item.completed .todo-checkbox {
+  animation: checkboxPulse 0.3s ease;
+}
+
+@keyframes checkboxPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 480px) {
+  .todo-item {
+    padding: 10px 12px;
+  }
+  
+  .todo-content {
+    gap: 10px;
+  }
+  
+  .todo-text {
+    font-size: 13px;
+  }
+  
+  .todo-edit-input {
+    font-size: 13px;
+  }
+  
+  .todo-actions {
+    opacity: 1; /* 在移动端始终显示操作按钮 */
+  }
+  
+  .todo-action-btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .todo-action-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}

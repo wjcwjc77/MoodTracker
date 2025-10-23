@@ -1,4 +1,4 @@
-import  { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import './MoodCalendar.css';
 import MoodSelector from './MoodSelector';
@@ -15,18 +15,16 @@ function MoodCalendar() {
   const yearDropdownRef = useRef<HTMLDivElement>(null);
   const monthDropdownRef = useRef<HTMLDivElement>(null);
 
-  // 获取当前月份的日历数据
   const calendarData = useMemo(() => {
     const startOfMonth = currentDate.startOf('month');
     const endOfMonth = currentDate.endOf('month');
     const startOfWeek = startOfMonth.startOf('week');
-    
-    // 计算需要多少行来完整显示月份
+
     const firstWeekday = startOfMonth.day(); // 0 = Sunday, 1 = Monday, etc.
     const daysInMonth = endOfMonth.date();
     const totalCells = firstWeekday + daysInMonth;
     const weeksNeeded = Math.ceil(totalCells / 7);
-    
+
     // 计算结束日期，确保有足够的行数
     const endOfWeek = startOfWeek.add(weeksNeeded * 7 - 1, 'day');
 
@@ -60,76 +58,69 @@ function MoodCalendar() {
     }));
   }, [selectedDate, showMoodSelector, refreshKey]); // 添加refreshKey依赖项
 
-  // 定义分数对应的颜色映射
   const getScoreColor = (score: number): string => {
     if (score === 0) return '#E1ECEE';
     if (score <= 2) return '#FB8285'; // 低分：红色系
     if (score <= 4) return '#4FB2FF'; // 中低分：蓝色系
     if (score <= 6) return '#48FBD2'; // 中高分：青色系
-    return '#5DFA60'; // 高分：绿色系
+    return '#5DFA60'; 
   };
 
-  // 生成多段折线 - 每段根据起点分值使用不同颜色
   const generateMoodLineSegments = (data: typeof recentMoodData) => {
     if (data.length === 0) return [];
-    
+
     const segments: Array<{ path: string; color: string }> = [];
-    
-    // 过滤掉无效数据点
+
     const validData = data.map((item, index) => ({
       ...item,
       originalIndex: index,
       x: index * 33 + 16,
       y: 49 - Math.max(item.score * 6, 3)
     })).filter(item => item.score > 0);
-    
+
     if (validData.length === 0) return segments;
-    
-    // 为每两个相邻点之间创建一段线条
+
     for (let i = 0; i < validData.length - 1; i++) {
       const startPoint = validData[i];
       const endPoint = validData[i + 1];
-      
+
       const path = `M ${startPoint.x},${startPoint.y} L ${endPoint.x},${endPoint.y}`;
       const color = getScoreColor(startPoint.score);
-      
+
       segments.push({ path, color });
     }
-    
+
     return segments;
   };
 
-  // 处理日期点击
   const handleDateClick = (date: Dayjs) => {
     const dateStr = date.format('YYYY-MM-DD');
     setSelectedDate(dateStr);
     setShowMoodSelector(true);
   };
 
-  // 处理心情选择
-  const handleMoodSelect = (mood: MoodType) => {
+  const handleMoodSelect = useCallback((mood: MoodType) => {
     const score = MOOD_CONFIG[mood].score;
     addMoodRecord(selectedDate, mood, score);
     setShowMoodSelector(false);
     setSelectedDate('');
     setRefreshKey(prev => prev + 1); // 触发重新渲染
-  };
+  }, [selectedDate]);
 
-  // 处理清除心情
-  const handleClearMood = () => {
+  const handleClearMood = useCallback(() => {
     import('../utils/moodStorage').then(({ deleteMoodRecord }) => {
       deleteMoodRecord(selectedDate);
       setShowMoodSelector(false);
       setSelectedDate('');
       setRefreshKey(prev => prev + 1); // 触发重新渲染
     });
-  };
+  }, [selectedDate]);
 
   // 关闭心情选择器
-  const closeMoodSelector = () => {
+  const closeMoodSelector = useCallback(() => {
     setShowMoodSelector(false);
     setSelectedDate('');
-  };
+  }, []);
 
   // 生成年份选项（过去三年和未来三年）
   const getYearOptions = () => {
@@ -204,11 +195,12 @@ function MoodCalendar() {
     const isCurrentMonth = date.month() === currentDate.month();
     const isToday = date.isSame(dayjs(), 'day');
     const moodData = getMoodData(date);
+    const isSuperMoodDay = moodData && moodData.mood === 'kissing';
 
     return (
       <div
         key={date.format('YYYY-MM-DD')}
-        className={`calendar-date-cell ${!isCurrentMonth ? 'other-month' : ''} ${isToday ? 'today' : ''}`}
+        className={`calendar-date-cell ${!isCurrentMonth ? 'other-month' : ''} ${isToday ? 'today' : ''} ${isSuperMoodDay ? 'super-mood-day' : ''}`}
         onClick={() => handleDateClick(date)}
       >
         <div className="date-number">
@@ -257,8 +249,8 @@ function MoodCalendar() {
         <div className="header-left">
           <div className="date-info">
             <div className="year-selector" ref={yearDropdownRef}>
-              <span 
-                className="year" 
+              <span
+                className="year"
                 onClick={() => {
                   setShowYearDropdown(!showYearDropdown);
                   setShowMonthDropdown(false);
@@ -280,10 +272,10 @@ function MoodCalendar() {
                 </div>
               )}
             </div>
-            
+
             <div className="month-selector" ref={monthDropdownRef}>
-              <span 
-                className="month" 
+              <span
+                className="month"
                 onClick={() => {
                   setShowMonthDropdown(!showMonthDropdown);
                   setShowYearDropdown(false);
@@ -305,17 +297,17 @@ function MoodCalendar() {
                 </div>
               )}
             </div>
-            
+
             <button className="today-btn" onClick={goToToday}>
               Today
             </button>
             <span className="subtitle">为你的每日心情盖戳～</span>
           </div>
         </div>
-        
+
         <div className="header-right">
           <div className="mood-chart">
-            <div className="chart-title">过去7天心情曲线</div>
+            <div className="chart-title">心情曲线</div>
             <div className="chart-content">
               <div className="y-axis">
                 {[8, 6, 4, 2].map(score => (
@@ -329,11 +321,11 @@ function MoodCalendar() {
                   {/* 绘制网格线 */}
                   <defs>
                     <pattern id="grid" width="33" height="6.125" patternUnits="userSpaceOnUse">
-                      <path d="M 33 0 L 0 0 0 6.125" fill="none" stroke="#E1ECEE" strokeWidth="0.5" opacity="0.3"/>
+                      <path d="M 33 0 L 0 0 0 6.125" fill="none" stroke="#E1ECEE" strokeWidth="0.5" opacity="0.3" />
                     </pattern>
                   </defs>
                   <rect width="232" height="49" fill="url(#grid)" />
-                  
+
                   {/* 绘制多段折线图 - 根据心情分值使用不同颜色 */}
                   {generateMoodLineSegments(recentMoodData).map((segment, index) => (
                     <path
@@ -356,14 +348,14 @@ function MoodCalendar() {
                       top: `${49 - Math.max(data.score * 6, 3)}px`,
                     }}
                   >
-                    <div 
+                    <div
                       className="point-outer"
-                      style={{ 
+                      style={{
                         backgroundColor: '#FFFFFF',
                         border: `2px solid ${data.score > 0 ? data.color : '#E1ECEE'}`
                       }}
                     >
-                      <div 
+                      <div
                         className="point-inner"
                         style={{ backgroundColor: data.score > 0 ? data.color : '#E1ECEE' }}
                       />

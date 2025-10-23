@@ -1,4 +1,5 @@
 import './App.css'
+import './styles/animations.css'
 import MoodCalendar from './components/MoodCalendar'
 
 function App() {
