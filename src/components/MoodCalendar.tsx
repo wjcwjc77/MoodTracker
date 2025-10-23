@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import  { useState, useMemo, useRef, useEffect } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import './MoodCalendar.css';
 import MoodSelector from './MoodSelector';
