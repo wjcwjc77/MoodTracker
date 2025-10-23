@@ -1,4 +1,519 @@
 .mood-calendar {
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  border-radius: 23px;
+  background: rgba(255, 255, 255, 0.44);
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+}
+
+/* 顶部区域 */
+.calendar-header {
+  box-sizing: border-box;
+  overflow: visible;
+  flex-shrink: 0;
+  width: 100%;
+  height: 105px;
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  position: relative;
+  z-index: 10;
+}
+
+.header-left {
+  box-sizing: border-box;
+  flex-basis: 449px;
+  width: 449px;
+  height: 31px;
+  display: flex;
+  justify-content: normal;
+  align-items: center;
+  padding: 0px;
+  gap: 20px;
+  position: relative;
+  z-index: 11;
+}
+
+.date-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 12;
+}
+
+.year-selector {
+  position: relative;
+  display: inline-block;
+  z-index: 13;
+}
+
+.month-selector {
+  position: relative;
+  display: inline-block;
+  z-index: 13;
+}
+
+.year {
+  box-sizing: border-box;
+  min-width: 58px;
+  text-align: center;
+  vertical-align: top;
+  font-size: 24px;
+  line-height: 1.2;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #000000;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.year:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.month {
+  box-sizing: border-box;
+  min-width: 99px;
+  text-align: center;
+  vertical-align: top;
+  font-size: 24px;
+  line-height: 1.2;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #000000;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.month:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 下拉框样式 */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #FFFFFF;
+  border: 1px solid #E1ECEE;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  max-height: 200px;
+  overflow-y: auto;
+  min-width: 120px;
+  margin-top: 4px;
+}
+
+.year-dropdown {
+  min-width: 80px;
+}
+
+.month-dropdown {
+  min-width: 140px;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: #000000;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-item.active {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.dropdown-item:first-child {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.dropdown-item:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.today-btn {
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-basis: 79px;
+  width: 79px;
+  height: 31px;
+  border-radius: 26px;
+  background: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 14px;
+  gap: 10px;
+  border: none;
+  cursor: pointer;
   
+  font-size: 16px;
+  line-height: 1.2;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+.subtitle {
+  box-sizing: border-box;
+  min-width: 160px;
+  vertical-align: top;
+  font-size: 14px;
+  line-height: normal;
+  font-family: 'PingFang SC', sans-serif;
+  font-weight: 400;
+  letter-spacing: 1.4px;
+  color: #89A0A4;
+}
+
+.header-right {
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-basis: 287px;
+  width: 287px;
+  height: 86px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #FFFFFF;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.46);
+  display: flex;
+  flex-direction: column;
+  justify-content: normal;
+  align-items: center;
+  padding: 5px 15px 11px;
+  gap: 6.89px;
+}
+
+.chart-title {
+  box-sizing: border-box;
+  min-width: 57px;
+  text-align: right;
+  vertical-align: top;
+  font-size: 8px;
+  line-height: 12px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  color: #648A91;
+}
+
+.mood-chart {
+  width: 100%;
+  height: 100%;
+}
+
+.chart-content {
+  box-sizing: border-box;
+  flex-basis: 49px;
+  width: 255px;
+  height: 49px;
+  display: flex;
+  justify-content: normal;
+  align-items: flex-end;
+  padding: 0px;
+  gap: 7px;
+}
+
+.y-axis {
+  box-sizing: border-box;
+  flex-basis: 20px;
+  width: 20px;
+  height: 49px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-right: 4px;
+}
+
+.y-axis-label {
+  font-size: 10px;
+  line-height: 1;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  color: #648A91;
+  height: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.chart-area {
+  box-sizing: border-box;
+  flex-basis: 228px;
+  width: 228px;
+  height: 49px;
+  display: flex;
+  justify-content: normal;
+  align-items: center;
+  padding: 0px;
+  position: relative;
+}
+
+.mood-line {
+  position: absolute;
+  width: 232px;
+  height: 49px;
+}
+
+.mood-point {
+  position: absolute;
+  width: 7px;
+  height: 49px;
+}
+
+.point-outer {
+  box-sizing: border-box;
+  overflow: hidden;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.point-inner {
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+/* 日历主体 */
+.calendar-body {
+  box-sizing: border-box;
+  flex: 1;
+  width: 100%;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: normal;
+  padding: 0px 24px 24px;
+  gap: 10px;
+}
+
+.calendar-grid {
+  box-sizing: border-box;
+  overflow: hidden;
+  flex: 1;
+  width: 100%;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: normal;
+  padding: 0px;
+  gap: 10px;
+}
+
+/* 星期标题行 */
+.calendar-week-header {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: 100%;
+  height: 43px;
+  align-self: stretch;
+  display: flex;
+  justify-content: normal;
+  padding: 0px;
+  gap: 10px;
+}
+
+.week-header-cell {
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 181px;
+  height: 43px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 10px;
+  
+  font-size: 16px;
+  line-height: 1.2;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* 日期行 */
+.calendar-week-row {
+  box-sizing: border-box;
+  flex: 1;
+  width: 100%;
+  min-height: 80px;
+  align-self: stretch;
+  display: flex;
+  justify-content: normal;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+}
+
+.calendar-date-cell {
+  box-sizing: border-box;
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  align-self: stretch;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #E1ECEE;
+  border-radius: 8px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: normal;
+  padding: 0px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calendar-date-cell:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-date-cell.other-month {
+  background: rgba(240, 245, 246, 0.5);
+}
+
+.calendar-date-cell.other-month .date-number {
+  color: #BEBEBE;
+}
+
+.calendar-date-cell.today {
+  border-color: #000000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.date-number {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: 100%;
+  min-height: 30px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: normal;
+  padding: 12px 12px 0px;
+  gap: 10px;
+  
+  font-size: 14px;
+  line-height: 18px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  color: #000000;
+  text-align: right;
+}
+
+.mood-area {
+  box-sizing: border-box;
+  overflow: hidden;
+  flex: 1;
+  width: 100%;
+  background: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mood-display {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mood-show-icon {
+  width: 100%;
+  height: 100%;
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.mood-indicator {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #000000;
+}
+
+/* 响应式调整 */
+@media (max-width: 1400px) {
+  .mood-calendar {
+    margin: 0 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar-header {
+    padding: 8px 16px;
+  }
+  
+  .calendar-body {
+    padding: 0px 16px 16px;
+  }
+  
+  .year, .month {
+    font-size: 20px;
+  }
+  
+  .calendar-week-row {
+    min-height: 60px;
+  }
+  
+  .date-number {
+    font-size: 12px;
+    padding: 8px 8px 0px;
+    min-height: 24px;
+  }
+  
+  
+  .mood-show-icon {
+    width: 60%;
+    height: 60%;
+    max-width: 40px;
+    max-height: 40px;
+  }
+  
+  .mood-indicator {
+    width: 24px;
+    height: 24px;
+  }
 }
 
